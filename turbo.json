@@ -1,0 +1,14 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "db:up": {
+      "cache": false
+    },
+    "db:down": {
+      "cache": false
+    },
+    "db:setup": {
+      "cache": false
+    }
+  }
+}
