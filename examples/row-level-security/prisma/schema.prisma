@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/client"
+  previewFeatures = ["clientExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id   String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name String
+
+  users    User[]
+  projects Project[]
+  tasks    Task[]
+}
+
+model User {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String @default(dbgenerated("(current_setting('app.current_company_id'::text))::uuid")) @db.Uuid
+  email     String @unique
+
+  company       Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  ownedProjects Project[]
+  assignedTasks Task[]
+}
+
+model Project {
+  id        String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String  @default(dbgenerated("(current_setting('app.current_company_id'::text))::uuid")) @db.Uuid
+  userId    String? @db.Uuid
+  title     String
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  owner   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  tasks   Task[]
+}
+
+enum TaskStatus {
+  Pending
+  InProgress
+  Complete
+  WontDo
+}
+
+model Task {
+  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String     @default(dbgenerated("(current_setting('app.current_company_id'::text))::uuid")) @db.Uuid
+  projectId String     @db.Uuid
+  userId    String?    @db.Uuid
+  title     String
+  status    TaskStatus
+
+  company  Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  project  Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignee User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
