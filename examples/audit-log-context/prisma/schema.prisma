@@ -1,0 +1,94 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../src/generated/client"
+  previewFeatures = ["clientExtensions", "multiSchema"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["public", "audit"]
+}
+
+model User {
+  id    Int    @id @default(autoincrement())
+  email String
+
+  orders          Order[]
+  productVersions ProductVersion[]
+  orderVersions   OrderVersion[]
+
+  @@schema("public")
+}
+
+model Product {
+  id   Int    @id @default(autoincrement())
+  name String
+
+  orders   Order[]
+  versions ProductVersion[]
+
+  @@schema("public")
+}
+
+model Order {
+  id        Int @id @default(autoincrement())
+  userId    Int
+  productId Int
+  quantity  Int
+
+  user     User           @relation(fields: [userId], references: [id])
+  product  Product        @relation(fields: [productId], references: [id])
+  versions OrderVersion[]
+
+  @@schema("public")
+}
+
+enum AuditOperation {
+  INSERT
+  UPDATE
+  DELETE
+
+  @@schema("audit")
+}
+
+model ProductVersion {
+  // Version metadata fields
+  versionId        Int            @id @default(autoincrement())
+  versionOperation AuditOperation
+  versionProductId Int?
+  versionUserId    Int?
+  versionTimestamp DateTime
+
+  // Mirrored fields from the Product table
+  id   Int
+  name String
+
+  product Product? @relation(fields: [versionProductId], references: [id])
+  user    User?    @relation(fields: [versionUserId], references: [id])
+
+  @@schema("audit")
+}
+
+model OrderVersion {
+  // Version metadata fields
+  versionId        Int            @id @default(autoincrement())
+  versionOperation AuditOperation
+  versionOrderId   Int?
+  versionUserId    Int?
+  versionTimestamp DateTime
+
+  // Mirrored fields from the Order table
+  id        Int
+  userId    Int
+  productId Int
+  quantity  Int
+
+  order Order? @relation(fields: [versionOrderId], references: [id])
+  user  User?  @relation(fields: [versionUserId], references: [id])
+
+  @@schema("audit")
+}
