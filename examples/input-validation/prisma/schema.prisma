@@ -1,15 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider        = "prisma-client-js"
-  output          = "../src/generated/client"
   previewFeatures = ["clientExtensions"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model Product {
@@ -17,14 +13,14 @@ model Product {
   slug        String
   name        String
   description String
-  price       Decimal  @db.Money
+  price       Decimal
   reviews     Review[]
 }
 
 model Review {
   id        String  @id @default(cuid())
   body      String
-  stars     Int     @db.SmallInt
+  stars     Int
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
 }

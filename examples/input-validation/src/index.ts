@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from "./generated/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { ProductValidation } from "./models/product";
 import { ReviewValidation } from "./models/review";
 

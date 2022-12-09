@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Prisma } from "../generated/client";
+import { Prisma } from "@prisma/client";
 
 const schema = z.object({
   body: z.string().max(250),
@@ -8,15 +8,10 @@ const schema = z.object({
 }) satisfies z.Schema<Prisma.ReviewUncheckedCreateInput>;
 
 export const ReviewValidation = Prisma.defineExtension({
-  name: "review-validation",
   query: {
     review: {
       create({ args, query }) {
         args.data = schema.parse(args.data);
-        return query(args);
-      },
-      createMany({ args, query }) {
-        args.data = z.array(schema).parse(args.data);
         return query(args);
       },
       update({ args, query }) {

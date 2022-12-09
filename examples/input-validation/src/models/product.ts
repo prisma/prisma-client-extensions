@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Prisma } from "../generated/client";
+import { Prisma } from "@prisma/client";
 
 const schema = z.object({
   slug: z
@@ -14,15 +14,10 @@ const schema = z.object({
 }) satisfies z.Schema<Prisma.ProductUncheckedCreateInput>;
 
 export const ProductValidation = Prisma.defineExtension({
-  name: "product-validation",
   query: {
     product: {
       create({ args, query }) {
         args.data = schema.parse(args.data);
-        return query(args);
-      },
-      createMany({ args, query }) {
-        args.data = z.array(schema).parse(args.data);
         return query(args);
       },
       update({ args, query }) {
