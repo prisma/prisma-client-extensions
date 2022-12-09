@@ -1,10 +1,7 @@
 import bcrypt from "bcryptjs";
-import { PrismaClient } from "./generated/client";
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
-
-const xprisma = prisma.$extends({
-  name: "custom-methods",
+const prisma = new PrismaClient().$extends({
   model: {
     user: {
       async signUp(email: string, password: string) {
@@ -31,10 +28,10 @@ const xprisma = prisma.$extends({
 });
 
 async function main() {
-  await xprisma.user.signUp("user1@example1.com", "p4ssword");
-  await xprisma.user.signUp("user2@example2.com", "s3cret");
+  await prisma.user.signUp("user1@example1.com", "p4ssword");
+  await prisma.user.signUp("user2@example2.com", "s3cret");
 
-  const users = await xprisma.user.findManyByDomain("example2.com");
+  const users = await prisma.user.findManyByDomain("example2.com");
   console.log(users);
 }
 
