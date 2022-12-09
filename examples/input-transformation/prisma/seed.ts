@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { PrismaClient } from "../src/generated/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -8,12 +8,15 @@ async function main() {
   await prisma.post.deleteMany({});
 
   // Create 100 random posts
-  await prisma.post.createMany({
-    data: Array.from({ length: 100 }, () => ({
-      title: faker.hacker.phrase(),
-      published: faker.datatype.boolean(),
-    })),
-  });
+  const posts = Array.from({ length: 100 }, () => ({
+    title: faker.hacker.phrase(),
+    published: faker.datatype.boolean(),
+  })) satisfies Prisma.PostCreateInput[];
+
+  // Seed the database
+  for (const post of posts) {
+    await prisma.post.create({ data: post });
+  }
 
   console.log(`Database has been seeded. 🌱`);
 }

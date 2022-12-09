@@ -1,9 +1,8 @@
-import { PrismaClient } from "./generated/client";
+import { PrismaClient } from "@prisma/client";
 
 const adminPrisma = new PrismaClient();
 
 const publicPrisma = adminPrisma.$extends({
-  name: "input-transformation",
   query: {
     post: {
       $allOperations({ args, query, operation }) {
