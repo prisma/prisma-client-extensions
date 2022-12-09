@@ -1,9 +1,6 @@
-import { PrismaClient } from "./generated/client";
+import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
-
-const xprisma = prisma.$extends({
-  name: "model-methods",
+const prisma = new PrismaClient().$extends({
   result: {
     user: {
       save: {
@@ -24,14 +21,22 @@ const xprisma = prisma.$extends({
 });
 
 async function main() {
-  const user = await xprisma.user.findFirstOrThrow({});
-  user.email = "test@example.com";
+  const user = await prisma.user.create({
+    data: { email: "test@example.com" },
+  });
+  user.email = "updated@example.com";
 
   await user.save();
-  console.info(await xprisma.user.findUnique({ where: { id: user.id } }));
+  console.info(
+    "Updated object: ",
+    await prisma.user.findUnique({ where: { id: user.id } })
+  );
 
   await user.delete();
-  console.info(await xprisma.user.findUnique({ where: { id: user.id } }));
+  console.info(
+    "Deleted object: ",
+    await prisma.user.findUnique({ where: { id: user.id } })
+  );
 }
 
 main()
