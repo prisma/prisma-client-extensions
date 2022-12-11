@@ -1,9 +1,8 @@
+import { PrismaClient } from "@prisma/client";
 import { performance } from "perf_hooks";
-import { PrismaClient } from "./generated/client";
 import * as util from "util";
 
 const prisma = new PrismaClient().$extends({
-  name: "query-logging",
   query: {
     $allModels: {
       async $allOperations({ operation, model, args, query }) {

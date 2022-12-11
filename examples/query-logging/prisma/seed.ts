@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { PrismaClient } from "../src/generated/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -8,12 +8,15 @@ async function main() {
   await prisma.user.deleteMany({});
 
   // Create 100 random users
-  await prisma.user.createMany({
-    data: Array.from({ length: 100 }, () => ({
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-    })),
-  });
+  const users = Array.from({ length: 100 }, () => ({
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+  })) satisfies Prisma.UserCreateInput[];
+
+  // Seed the database
+  for (const user of users) {
+    await prisma.user.create({ data: user });
+  }
 
   console.log(`Database has been seeded. 🌱`);
 }
