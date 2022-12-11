@@ -1,14 +1,17 @@
 import { backOff, IBackOffOptions } from "exponential-backoff";
-import { Prisma, PrismaClient } from "./generated/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 function RetryTransactions(options?: Partial<IBackOffOptions>) {
   return Prisma.defineExtension((prisma) =>
     prisma.$extends({
-      name: "retry-transactions",
       client: {
         $transaction(...args: any) {
           return backOff(() => prisma.$transaction.apply(prisma, args), {
-            retry: (e) => e.code === "P2034",
+            retry: (e) => {
+              // Retry the transaction only if the error was due to a write conflict or deadlock
+              // See: https://www.prisma.io/docs/reference/api-reference/error-reference#p2034
+              return e.code === "P2034";
+            },
             ...options,
           });
         },
@@ -44,6 +47,7 @@ async function main() {
 async function firstTransaction(id: string) {
   await prisma.$transaction(
     async (tx) => {
+      console.log("First transaction started");
       try {
         // Read
         const user = await tx.user.findUniqueOrThrow({ where: { id } });
@@ -67,6 +71,7 @@ async function secondTransaction(id: string) {
 
   await prisma.$transaction(
     async (tx) => {
+      console.log("Second transaction started");
       try {
         await tx.user.update({ where: { id }, data: { firstName: "Beto" } });
       } catch (e) {
@@ -76,7 +81,6 @@ async function secondTransaction(id: string) {
     },
     { isolationLevel: Prisma.TransactionIsolationLevel.Serializable }
   );
-
   console.log("Second transaction committed");
 }
 
