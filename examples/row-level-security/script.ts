@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient, TaskStatus } from "./generated/client";
+import { Prisma, PrismaClient, TaskStatus } from "@prisma/client";
 
 const prisma = new PrismaClient().$extends({
   name: "row-level-security",
