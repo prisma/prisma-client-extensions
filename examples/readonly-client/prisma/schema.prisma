@@ -1,0 +1,15 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["clientExtensions", "extendedWhereUnique"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Post {
+  id        String  @id @default(cuid())
+  title     String
+  published Boolean
+}

@@ -23,6 +23,7 @@ intended to be used in production environments.
 | [`model-filters`](examples/model-filters)               | Adds reusable filters that can composed into complex `where` conditions for a model         |
 | [`obfuscated-fields`](examples/obfuscated-fields)       | Prevents sensitive data (e.g. `password` fields) from being included in results             |
 | [`query-logging`](examples/query-logging)               | Wraps Prisma Client queries with simple query timing and logging                            |
+| [`readonly-client`](examples/readonly-client)           | Creates a client that only allows read operations                                           |
 | [`retry-transactions`](examples/retry-transactions)     | Adds a retry mechanism to transactions with exponential backoff and jitter                  |
 | [`row-level-security`](examples/row-level-security)     | Uses Postgres row-level security policies to isolate data a multi-tenant application        |
 | [`static-methods`](examples/static-methods)             | Adds custom query methods to Prisma Client models                                           |
