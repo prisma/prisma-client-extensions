@@ -1,7 +1,6 @@
-import { Prisma, PrismaClient } from "./generated/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const AuditLogContext = Prisma.defineExtension({
-  name: "audit-log-context",
   client: {
     // Creates an extended Prisma Client which provides the given `userId` to audit triggers
     forUser(userId: number) {
