@@ -1,15 +1,49 @@
-import { PrismaClient, Prisma } from "./generated/client";
-import { Profile } from "./profile";
+import { PrismaClient, Prisma } from "@prisma/client";
+import { Profile } from "./schemas";
 
 const prisma = new PrismaClient().$extends({
-  name: "json-field-types",
   result: {
     user: {
-      profile: {
+      profileData: {
         needs: { profile: true },
         compute({ profile }) {
           return Profile.parse(profile);
         },
+      },
+    },
+  },
+
+  query: {
+    user: {
+      create({ args, query }) {
+        args.data.profile = Profile.parse(args.data.profile);
+        return query(args);
+      },
+      createMany({ args, query }) {
+        const users = Array.isArray(args.data) ? args.data : [args.data];
+        for (const user of users) {
+          user.profile = Profile.parse(user.profile);
+        }
+        return query(args);
+      },
+      update({ args, query }) {
+        if (args.data.profile !== undefined) {
+          args.data.profile = Profile.parse(args.data.profile);
+        }
+        return query(args);
+      },
+      updateMany({ args, query }) {
+        if (args.data.profile !== undefined) {
+          args.data.profile = Profile.parse(args.data.profile);
+        }
+        return query(args);
+      },
+      upsert({ args, query }) {
+        args.create.profile = Profile.parse(args.create.profile);
+        if (args.update.profile !== undefined) {
+          args.update.profile = Profile.parse(args.update.profile);
+        }
+        return query(args);
       },
     },
   },
@@ -25,7 +59,7 @@ async function main() {
 function renderUser({
   id,
   email,
-  profile: { firstName, lastName, avatar, contactInfo, socialLinks },
+  profileData: { firstName, lastName, avatar, contactInfo, socialLinks },
 }: User) {
   const card = [
     "===============================================================================",
