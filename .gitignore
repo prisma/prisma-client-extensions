@@ -5,4 +5,4 @@ package-lock.json
 .vscode/
 dev.db
 dev.db-journal
-*.env*
+.env
