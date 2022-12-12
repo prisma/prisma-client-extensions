@@ -10,7 +10,7 @@ Currently, `query` extensions allow you to modify the arguments passed to Prisma
 
 > **NOTE**: Query extensions do not currently work for nested operations. In this example, the `publicPrisma` client will only filter out unpublished posts when calling a top level `post` method such as `publicPrisma.post.findMany`. It won't filter out posts that are included as relations of another model with [nested reads using `include` or `select`](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-reads).
 
-Prisma Client extensions are currently in developer preview. This extension in is provided as an example only. It is not intended to be used in production environments.
+Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `query` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) for more information.
 

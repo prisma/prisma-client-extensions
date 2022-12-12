@@ -8,7 +8,7 @@ This example shows a way to implement internationalization (i18n) at the data ac
 
 > **NOTE**: There is currently [an open issue](https://github.com/prisma/prisma/issues/16643) regarding `result` extensions that shadow a field with the same name as one of their dependencies. As a workaround, the transformed field in this example is named `createdAtFormatted`, but in the future this will likely be changed to `createdAt` to shadow the underlying transformed field.
 
-Prisma Client extensions are currently in developer preview. This extension in is provided as an example only. It is not intended to be used in production environments.
+Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `result` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/result) for more information.
 

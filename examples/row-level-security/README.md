@@ -6,7 +6,7 @@ This example shows how to use a Prisma Client extension to isolate data between 
 
 > **NOTE**: Because this example extension wraps every query in a new batch transaction, explicitly running transactions with `companyPrisma.$transaction()` may not work as intended. In a future version of Prisma Client, `query` extensions will have access to information about whether they are run inside a transaction, similar to [the `runInTransaction` parameter provided to Prisma middleware](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#params). When this is available, this example will be updated to work for queries run inside explicit transactions.
 
-Prisma Client extensions are currently in developer preview. This extension in is provided as an example only. It is not intended to be used in production environments.
+Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `query` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) for more information.
 

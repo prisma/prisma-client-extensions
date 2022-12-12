@@ -6,7 +6,7 @@ This example shows how to use a Prisma Client extension to automatically retry t
 
 > **NOTE**: This extension overwrites the `$transaction` method on a Prisma Client instance, and relies on this method being defined on a generated Prisma Client. It may not currently have correct type definitions when packaged and distributed as a reusable extension.
 
-Prisma Client extensions are currently in developer preview. This extension in is provided as an example only. It is not intended to be used in production environments.
+Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `client` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/client) for more information.
 
