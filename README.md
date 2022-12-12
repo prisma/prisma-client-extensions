@@ -20,6 +20,7 @@ intended to be used in production environments.
 | [`input-validation`](examples/input-validation)         | Runs custom validation logic on input arguments passed to mutation methods                  |
 | [`instance-methods`](examples/instance-methods)         | Adds Active Record-like methods like `save()` and `delete()` to result objects              |
 | [`json-field-types`](examples/json-field-types)         | Uses strongly-typed runtime parsing for data stored in JSON columns                         |
+| [`model-filters`](examples/model-filters)               | Adds reusable filters that can composed into complex `where` conditions for a model         |
 | [`obfuscated-fields`](examples/obfuscated-fields)       | Prevents sensitive data (e.g. `password` fields) from being included in results             |
 | [`query-logging`](examples/query-logging)               | Wraps Prisma Client queries with simple query timing and logging                            |
 | [`retry-transactions`](examples/retry-transactions)     | Adds a retry mechanism to transactions with exponential backoff and jitter                  |
