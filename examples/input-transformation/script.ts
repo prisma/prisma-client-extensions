@@ -6,27 +6,22 @@ const publicPrisma = adminPrisma.$extends({
   query: {
     post: {
       $allOperations({ args, query, operation }) {
-        switch (operation) {
-          case "aggregate":
-          case "count":
-          case "findFirst":
-          case "findFirstOrThrow":
-          case "findMany":
-          case "findUnique":
-          case "findUniqueOrThrow":
-          case "groupBy": {
-            return query({
-              ...args,
-              where: {
-                ...(args as any).where,
-                published: true,
-              },
-            });
-          }
-
-          default:
-            throw new Error("Public client is read-only");
+        // Do nothing for `create`
+        if (operation === "create") {
+          return query(args);
         }
+
+        // Refine the type - methods other than `create` accept a `where` clause
+        args = args as Extract<typeof args, { where: unknown }>;
+
+        // Augment the `where` clause with `published: true`
+        return query({
+          ...args,
+          where: {
+            ...args.where,
+            published: true,
+          },
+        });
       },
     },
   },

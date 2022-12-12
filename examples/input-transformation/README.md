@@ -1,6 +1,6 @@
 # Prisma Client Extension - Input Transformation
 
-This example creates an `adminPrisma` client instance, as well as an extended `publicPrisma` client instance. The `publicPrisma` client automatically restricts queries to only include `published` posts, and it does not allow any mutation methods like `create` or `update` to be called.
+This example creates an `adminPrisma` client instance, as well as an extended `publicPrisma` client instance. The `publicPrisma` client automatically restricts queries to only include `published` posts.
 
 This extension also uses the [`extendedWhereUnique` preview flag](https://www.prisma.io/docs/reference/api-reference/prisma-client-reference#enable-the-ability-to-filter-on-non-unique-fields-with-userwhereuniqueinput) to allow filtering on non-unique fields like `published` in methods like `findUnique`.
 
