@@ -14,8 +14,8 @@ intended to be used in production environments.
 | Example                                                 | Description                                                                                 |
 | :------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
 | [`audit-log-context`](examples/audit-log-context)       | Provides the current user's ID as context to Postgres audit log triggers                    |
+| [`callback-free-itx`](examples/callback-free-itx)       | Adds a method to start interactive transactions without callbacks                           |
 | [`computed-fields`](examples/computed-fields)           | Adds virtual / computed fields to result objects                                            |
-| [`flat-transactions`](examples/flat-transactions)       | Adds a method to start interactive transactions without callbacks                           |
 | [`input-transformation`](examples/input-transformation) | Transforms the input arguments passed to Prisma Client queries to filter the result set     |
 | [`input-validation`](examples/input-validation)         | Runs custom validation logic on input arguments passed to mutation methods                  |
 | [`instance-methods`](examples/instance-methods)         | Adds Active Record-like methods like `save()` and `delete()` to result objects              |

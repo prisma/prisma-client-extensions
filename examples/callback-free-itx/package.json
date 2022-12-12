@@ -1,5 +1,5 @@
 {
-  "name": "flat-transactions",
+  "name": "callback-free-itx",
   "private": true,
   "scripts": {
     "dev": "ts-node script.ts"

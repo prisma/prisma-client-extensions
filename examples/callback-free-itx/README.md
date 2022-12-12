@@ -1,14 +1,14 @@
-# Prisma Client Extension - Flat Transactions
+# Prisma Client Extension - Callback-free Interactive Transactions
 
 This example shows a Prisma Client extension which adds a new API for starting [interactive transactions](https://www.prisma.io/docs/concepts/components/prisma-client/transactions#interactive-transactions) without callbacks.
 
-This allows transactions to use a more imperative API, which may be convenient in some scenarios:
+This gives you the full power of [interactive transactions](https://www.prisma.io/docs/concepts/components/prisma-client/transactions#interactive-transactions) (such as read–modify–write cycles), but in a more imperative API. This may be more convenient than the normal callback-style API for interactive transactions in some scenarios:
 
 ```typescript
 const tx = await prisma.$begin();
 const user = await tx.user.findFirstOrThrow();
 await tx.user.update(/* ... */);
-await tx.$commit();
+await tx.$commit(); // Or: await tx.$rollback();
 ```
 
 ## Caveats
@@ -35,7 +35,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Create a `.env` file and install dependencies:
 
 ```sh
-cd examples/flat-transactions
+cd examples/callback-free-itx
 cp .env.example .env
 npm install
 ```
