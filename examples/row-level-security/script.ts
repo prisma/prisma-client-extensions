@@ -39,6 +39,17 @@ const prisma = new PrismaClient().$extends({
   },
 });
 
+type Config<TypeMap> = {
+  models: {
+    [K in keyof TypeMap]?: TypeMap[K] extends {
+      update: { args: { where: infer WhereUniqueInput }; result: infer Result };
+    }
+      ? (object: Result) => WhereUniqueInput
+      : never;
+  };
+};
+
+type foo = Config<Prisma.TypeMap>;
 async function main() {
   const user = await prisma.bypassRLS().user.findFirstOrThrow();
 

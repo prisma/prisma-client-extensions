@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["clientExtensions"]
+  previewFeatures = ["clientExtensions", "extendedWhereUnique"]
 }
 
 datasource db {
@@ -15,6 +15,7 @@ model Company {
   users    User[]
   projects Project[]
   tasks    Task[]
+  team     Team[]
 }
 
 model User {
@@ -23,8 +24,38 @@ model User {
   email     String @unique
 
   company       Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  profile       Profile?
   ownedProjects Project[]
   assignedTasks Task[]
+  teams         Team[]
+  ledTeams      Team[]    @relation("leader")
+}
+
+model Profile {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique @db.Uuid
+}
+
+model Team {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId String @default(dbgenerated("(current_setting('app.current_company_id'::text))::uuid")) @db.Uuid
+  leaderId  String @db.Uuid
+
+  company  Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  leader   User        @relation("leader", fields: [leaderId], references: [id])
+  members  User[]
+  projects Ownership[]
+}
+
+model Ownership {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  teamId         String    @db.Uuid
+  projectId      String    @db.Uuid
+  effectiveAt    DateTime
+  effectiveUntil DateTime?
+
+  team    Team    @relation(fields: [teamId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
 }
 
 model Project {
@@ -33,9 +64,10 @@ model Project {
   userId    String? @db.Uuid
   title     String
 
-  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  owner   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  company Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  owner   User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
   tasks   Task[]
+  teams   Ownership[]
 }
 
 enum TaskStatus {
@@ -46,14 +78,34 @@ enum TaskStatus {
 }
 
 model Task {
-  id        String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  companyId String     @default(dbgenerated("(current_setting('app.current_company_id'::text))::uuid")) @db.Uuid
-  projectId String     @db.Uuid
-  userId    String?    @db.Uuid
-  title     String
-  status    TaskStatus
+  id         String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  companyId  String     @default(dbgenerated("(current_setting('app.current_company_id'::text))::uuid")) @db.Uuid
+  projectId  String     @db.Uuid
+  userId     String?    @db.Uuid
+  title      String
+  status     TaskStatus
+  isComplete Boolean
+  size       Int
+  bigSize    BigInt
 
   company  Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   project  Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   assignee User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+}
+
+model Attribute {
+  serial Int    @default(autoincrement())
+  uuid   String @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  createdAt DateTime
+
+  stringValue           String   @unique
+  stringOptional        String?
+  stringList            String[]
+  stringDefault         String   @default("foo")
+  stringOptionalDefault String?  @default("foo")
+  stringListDefault     String[] @default(["foo", "bar"])
+
+  @@id([serial, uuid])
+  @@unique([serial, createdAt])
 }

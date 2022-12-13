@@ -49,6 +49,12 @@ async function main() {
   ]);
 
   console.log(`Database has been seeded. 🌱`);
+
+  await prisma.user.createMany({
+    data: Array.from({ length: 100 }, () => ({
+      email: randomEmail(),
+    })),
+  });
 }
 
 main()
