@@ -1,34 +1,30 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 
-const AuditLogContext = Prisma.defineExtension({
-  client: {
-    // Creates an extended Prisma Client which provides the given `userId` to audit triggers
-    forUser(userId: number) {
-      const prisma = Prisma.getExtensionContext(this);
-      return prisma.$extends({
-        query: {
-          $allModels: {
-            async $allOperations({ args, query }) {
-              const [, result] = await prisma.$transaction([
-                prisma.$executeRaw`SELECT set_config('app.current_user_id', ${userId.toString()}, TRUE)`,
-                query(args),
-              ]);
-              return result;
-            },
+function forUser(userId: number) {
+  return Prisma.defineExtension((prisma) =>
+    prisma.$extends({
+      query: {
+        $allModels: {
+          async $allOperations({ args, query }) {
+            const [, result] = await prisma.$transaction([
+              prisma.$executeRaw`SELECT set_config('app.current_user_id', ${userId.toString()}, TRUE)`,
+              query(args),
+            ]);
+            return result;
           },
         },
-      });
-    },
-  },
-});
+      },
+    })
+  );
+}
 
-const prisma = new PrismaClient().$extends(AuditLogContext);
+const prisma = new PrismaClient();
 
 async function main() {
   const user = await prisma.user.findFirstOrThrow();
   const product = await prisma.product.findFirstOrThrow();
 
-  const userPrisma = prisma.forUser(user.id);
+  const userPrisma = prisma.$extends(forUser(user.id));
 
   await userPrisma.product.update({
     where: { id: product.id },

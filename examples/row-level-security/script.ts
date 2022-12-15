@@ -1,48 +1,47 @@
 import { Prisma, PrismaClient, TaskStatus } from "@prisma/client";
 
-const prisma = new PrismaClient().$extends({
-  name: "row-level-security",
-  client: {
-    // Creates an extended Prisma Client which bypasses row-level security
-    bypassRLS() {
-      return Prisma.getExtensionContext(this).$extends({
-        query: {
-          $allModels: {
-            async $allOperations({ args, query }) {
-              const [, result] = await prisma.$transaction([
-                prisma.$executeRaw`SELECT set_config('app.bypass_rls', 'on', TRUE)`,
-                query(args),
-              ]);
-              return result;
-            },
+function bypassRLS() {
+  return Prisma.defineExtension((prisma) =>
+    prisma.$extends({
+      query: {
+        $allModels: {
+          async $allOperations({ args, query }) {
+            const [, result] = await prisma.$transaction([
+              prisma.$executeRaw`SELECT set_config('app.bypass_rls', 'on', TRUE)`,
+              query(args),
+            ]);
+            return result;
           },
         },
-      });
-    },
+      },
+    })
+  );
+}
 
-    // Creates an extended Prisma Client which can access the given company's data
-    forCompany(companyId: string) {
-      return Prisma.getExtensionContext(this).$extends({
-        query: {
-          $allModels: {
-            async $allOperations({ args, query }) {
-              const [, result] = await prisma.$transaction([
-                prisma.$executeRaw`SELECT set_config('app.current_company_id', ${companyId}, TRUE)`,
-                query(args),
-              ]);
-              return result;
-            },
+function forCompany(companyId: string) {
+  return Prisma.defineExtension((prisma) =>
+    prisma.$extends({
+      query: {
+        $allModels: {
+          async $allOperations({ args, query }) {
+            const [, result] = await prisma.$transaction([
+              prisma.$executeRaw`SELECT set_config('app.current_company_id', ${companyId}, TRUE)`,
+              query(args),
+            ]);
+            return result;
           },
         },
-      });
-    },
-  },
-});
+      },
+    })
+  );
+}
+
+const prisma = new PrismaClient();
 
 async function main() {
-  const user = await prisma.bypassRLS().user.findFirstOrThrow();
+  const user = await prisma.$extends(bypassRLS()).user.findFirstOrThrow();
 
-  const companyPrisma = prisma.forCompany(user.companyId);
+  const companyPrisma = prisma.$extends(forCompany(user.companyId));
 
   const projectInclude = {
     owner: true,
