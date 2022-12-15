@@ -1,98 +1,18 @@
 import { Prisma, PrismaClient, TaskStatus } from "@prisma/client";
+import { extractPreviewFeatures, getConfig, getDMMF } from "@prisma/internals";
+import fs from "fs";
 
-const prisma = new PrismaClient().$extends({
-  name: "row-level-security",
-  client: {
-    // Creates an extended Prisma Client which bypasses row-level security
-    bypassRLS() {
-      return Prisma.getExtensionContext(this).$extends({
-        query: {
-          $allModels: {
-            async $allOperations({ args, query }) {
-              const [, result] = await prisma.$transaction([
-                prisma.$executeRaw`SELECT set_config('app.bypass_rls', 'on', TRUE)`,
-                query(args),
-              ]);
-              return result;
-            },
-          },
-        },
-      });
-    },
+const prisma = new PrismaClient();
 
-    // Creates an extended Prisma Client which can access the given company's data
-    forCompany(companyId: string) {
-      return Prisma.getExtensionContext(this).$extends({
-        query: {
-          $allModels: {
-            async $allOperations({ args, query }) {
-              const [, result] = await prisma.$transaction([
-                prisma.$executeRaw`SELECT set_config('app.current_company_id', ${companyId}, TRUE)`,
-                query(args),
-              ]);
-              return result;
-            },
-          },
-        },
-      });
-    },
-  },
-});
-
-type Config<TypeMap> = {
-  models: {
-    [K in keyof TypeMap]?: TypeMap[K] extends {
-      update: { args: { where: infer WhereUniqueInput }; result: infer Result };
-    }
-      ? (object: Result) => WhereUniqueInput
-      : never;
-  };
-};
-
-type foo = Config<Prisma.TypeMap>;
 async function main() {
-  const user = await prisma.bypassRLS().user.findFirstOrThrow();
-
-  const companyPrisma = prisma.forCompany(user.companyId);
-
-  const projectInclude = {
-    owner: true,
-    tasks: {
-      include: {
-        assignee: true,
-      },
-    },
-  } satisfies Prisma.ProjectInclude;
-
-  const projects = await companyPrisma.project.findMany({
-    include: projectInclude,
+  const datamodel = fs.readFileSync("prisma/schema.prisma", "utf-8");
+  const config = await getConfig({ datamodel, ignoreEnvVarErrors: true });
+  const previewFeatures = extractPreviewFeatures(config);
+  const dmmf = await getDMMF({
+    datamodel,
+    previewFeatures,
   });
-
-  invariant(projects.every((project) => project.companyId === user.companyId));
-
-  const newProject = await companyPrisma.project.create({
-    include: projectInclude,
-    data: {
-      title: "New project",
-      owner: {
-        connect: { id: user.id },
-      },
-      tasks: {
-        createMany: {
-          data: [
-            { title: "Task A", status: TaskStatus.Pending, userId: user.id },
-            { title: "Task B", status: TaskStatus.Pending, userId: user.id },
-            { title: "Task C", status: TaskStatus.Pending, userId: user.id },
-          ],
-        },
-      },
-    },
-  });
-
-  invariant(newProject.companyId === user.companyId);
-  invariant(
-    newProject.tasks.every((task) => task.companyId === user.companyId)
-  );
+  await fs.writeFileSync("dmmf.json", JSON.stringify(dmmf, null, 2));
 }
 
 function invariant<T>(condition: T): asserts condition {

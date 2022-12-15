@@ -5,7 +5,8 @@
     "dev": "ts-node script.ts"
   },
   "dependencies": {
-    "@prisma/client": "^4.7.1"
+    "@prisma/client": "^4.7.1",
+    "@prisma/internals": "^4.7.1"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.6.0",
