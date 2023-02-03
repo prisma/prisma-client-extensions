@@ -11,8 +11,6 @@ This example includes a `User` model with a JSON `profile` field, which has a sp
 
 > **NOTE**: Query extensions do not currently work for nested operations. In this example, validations are only run on the top level `data` object passed to methods such as `prisma.user.create()`. Validations implemented this way do not automatically run for [nested writes](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-writes).
 
-> **NOTE**: There is currently [an open issue](https://github.com/prisma/prisma/issues/16643) regarding `result` extensions that shadow a field with the same name as one of their dependencies. As a workaround, the transformed field in this example is named `createdAtFormatted`, but in the future this will likely be changed to `createdAt` to shadow the underlying transformed field.
-
 Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read the documentation on [`query` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) and [`result` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) for more information.

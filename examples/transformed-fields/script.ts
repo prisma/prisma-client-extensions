@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient().$extends({
   result: {
     post: {
-      createdAtFormatted: {
+      createdAt: {
         needs: { createdAt: true },
         compute(post) {
           return formatDistanceToNow(post.createdAt, {
@@ -22,7 +22,7 @@ async function main() {
   const posts = await prisma.post.findMany({ take: 5 });
 
   for (const post of posts) {
-    console.info(`- ${post.title} (${post.createdAtFormatted})`);
+    console.info(`- ${post.title} (${post.createdAt})`);
   }
 }
 

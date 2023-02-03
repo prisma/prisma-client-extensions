@@ -1,10 +1,11 @@
-import { PrismaClient, Prisma } from "@prisma/client";
+import * as runtime from "@prisma/client/runtime/index";
+import { PrismaClient, Prisma, UserPayload } from "@prisma/client";
 import { Profile } from "./schemas";
 
 const prisma = new PrismaClient().$extends({
   result: {
     user: {
-      profileData: {
+      profile: {
         needs: { profile: true },
         compute({ profile }) {
           return Profile.parse(profile);
@@ -49,7 +50,8 @@ const prisma = new PrismaClient().$extends({
   },
 });
 
-type User = Prisma.UserGetPayload<{}, typeof prisma["$extends"]["extArgs"]>;
+type ExtArgs = UserPayload<typeof prisma["$extends"]["extArgs"]>;
+type User = runtime.Types.GetResult<ExtArgs, {}, "findUniqueOrThrow">;
 
 async function main() {
   const users = await prisma.user.findMany({ take: 10 });
@@ -59,7 +61,7 @@ async function main() {
 function renderUser({
   id,
   email,
-  profileData: { firstName, lastName, avatar, contactInfo, socialLinks },
+  profile: { firstName, lastName, avatar, contactInfo, socialLinks },
 }: User) {
   const card = [
     "===============================================================================",
