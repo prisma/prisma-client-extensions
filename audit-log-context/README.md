@@ -109,7 +109,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Create a `.env` file and install dependencies:
 
 ```sh
-cd examples/audit-log-context
+cd audit-log-context
 cp .env.example .env
 npm install
 ```

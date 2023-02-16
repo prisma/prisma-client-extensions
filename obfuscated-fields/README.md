@@ -1,10 +1,6 @@
-# Prisma Client Extension - Computed Fields
+# Prisma Client Extension - Obfuscated Fields
 
-This example demonstrates how to create a Prisma Client extension that adds virtual / computed fields to a Prisma model. These fields are not included in the database, but rather are computed at runtime.
-
-Computed fields are type-safe and may return anything from simple values to complex objects, or even functions that can act as methods for your models.
-
-Computed fields must specify which other fields they depend on, and they may be composed / reused by other computed fields.
+This example uses an extension to obfuscate a sensitive `password` field on a `User` model. The `password` column is not included in selected columns in the underlying SQL queries, and it will resolve to `undefined` when accessed on a user result object. It could also resolve to any other value, such as an obfuscated string like `"********"`.
 
 ## Caveats
 
@@ -29,7 +25,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/computed-fields
+cd obfuscated-fields
 npm install
 ```
 

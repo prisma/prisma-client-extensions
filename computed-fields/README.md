@@ -1,8 +1,10 @@
-# Prisma Client Extension - Transformed Fields
+# Prisma Client Extension - Computed Fields
 
-This example shows how to use a Prisma Client extension to transform result fields returned by queries. In this example, a date field is transformed to a relative string for a specific locale.
+This example demonstrates how to create a Prisma Client extension that adds virtual / computed fields to a Prisma model. These fields are not included in the database, but rather are computed at runtime.
 
-This example shows a way to implement internationalization (i18n) at the data access layer in your application. However, this technique allows you to implement any kind of custom transformation or serialization/deserialization of fields on your query results.
+Computed fields are type-safe and may return anything from simple values to complex objects, or even functions that can act as methods for your models.
+
+Computed fields must specify which other fields they depend on, and they may be composed / reused by other computed fields.
 
 ## Caveats
 
@@ -27,7 +29,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/transformed-fields
+cd computed-fields
 npm install
 ```
 

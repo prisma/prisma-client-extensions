@@ -35,7 +35,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Create a `.env` file and install dependencies:
 
 ```sh
-cd examples/callback-free-itx
+cd callback-free-itx
 cp .env.example .env
 npm install
 ```

@@ -119,7 +119,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Create a `.env` file and install dependencies:
 
 ```sh
-cd examples/row-level-security
+cd row-level-security
 cp .env.example .env
 npm install
 ```

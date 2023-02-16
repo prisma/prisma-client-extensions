@@ -1,6 +1,8 @@
-# Prisma Client Extension - Obfuscated Fields
+# Prisma Client Extension - Instance Methods
 
-This example uses an extension to obfuscate a sensitive `password` field on a `User` model. The `password` column is not included in selected columns in the underlying SQL queries, and it will resolve to `undefined` when accessed on a user result object. It could also resolve to any other value, such as an obfuscated string like `"********"`.
+This example shows how to add an [Active Record](https://www.martinfowler.com/eaaCatalog/activeRecord.html)-like interface to Prisma result objects. It uses a `result` extension to add `save` and `delete` methods directly to `User` model objects returned by Prisma Client methods.
+
+This technique can be used to customize Prisma result objects with behavior, analogous to adding instance methods to model classes.
 
 ## Caveats
 
@@ -25,7 +27,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/obfuscated-fields
+cd instance-methods
 npm install
 ```
 
@@ -37,15 +39,7 @@ Run the following command. An SQLite database will be created automatically:
 npx prisma migrate deploy
 ```
 
-### 3. Seed the database
-
-Run the following command to add seed data to the database:
-
-```sh
-npx prisma db seed
-```
-
-### 4. Run the `dev` script
+### 3. Run the `dev` script
 
 To run the `script.ts` file, run the following command:
 
