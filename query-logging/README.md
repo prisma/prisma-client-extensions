@@ -29,7 +29,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/query-logging
+cd query-logging
 npm install
 ```
 

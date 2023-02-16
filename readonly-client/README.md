@@ -1,12 +1,8 @@
-# Prisma Client Extension - Input Validation
+# Prisma Client Extension - Readonly Client
 
-This example uses Prisma Client extensions to perform custom runtime validations when creating and updating database objects.
-
-This technique could be used to sanitize user input or otherwise deny mutations that do not meet some criteria.
+This example creates a client that only allows read operations like `findMany` and `count`, not write operations like `create` or `update`. Calling write operations will result in an error at runtime and at compile time with TypeScript.
 
 ## Caveats
-
-> **NOTE**: Query extensions do not currently work for nested operations. In this example, validations are only run on the top level `data` object passed to methods such as `prisma.product.create()`. Validations implemented this way do not automatically run for [nested writes](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-writes).
 
 Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
 
@@ -29,7 +25,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/input-validation
+cd readonly-client
 npm install
 ```
 
@@ -41,7 +37,15 @@ Run the following command. An SQLite database will be created automatically:
 npx prisma migrate deploy
 ```
 
-### 3. Run the `dev` script
+### 3. Seed the database
+
+Run the following command to add seed data to the database:
+
+```sh
+npx prisma db seed
+```
+
+### 4. Run the `dev` script
 
 To run the `script.ts` file, run the following command:
 

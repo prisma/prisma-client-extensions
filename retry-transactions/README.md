@@ -28,7 +28,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Create a `.env` file and install dependencies:
 
 ```sh
-cd examples/retry-transactions
+cd retry-transactions
 cp .env.example .env
 npm install
 ```

@@ -1,8 +1,8 @@
-# Prisma Client Extension - Instance Methods
+# Prisma Client Extension - Transformed Fields
 
-This example shows how to add an [Active Record](https://www.martinfowler.com/eaaCatalog/activeRecord.html)-like interface to Prisma result objects. It uses a `result` extension to add `save` and `delete` methods directly to `User` model objects returned by Prisma Client methods.
+This example shows how to use a Prisma Client extension to transform result fields returned by queries. In this example, a date field is transformed to a relative string for a specific locale.
 
-This technique can be used to customize Prisma result objects with behavior, analogous to adding instance methods to model classes.
+This example shows a way to implement internationalization (i18n) at the data access layer in your application. However, this technique allows you to implement any kind of custom transformation or serialization/deserialization of fields on your query results.
 
 ## Caveats
 
@@ -27,7 +27,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/instance-methods
+cd transformed-fields
 npm install
 ```
 
@@ -39,7 +39,15 @@ Run the following command. An SQLite database will be created automatically:
 npx prisma migrate deploy
 ```
 
-### 3. Run the `dev` script
+### 3. Seed the database
+
+Run the following command to add seed data to the database:
+
+```sh
+npx prisma db seed
+```
+
+### 4. Run the `dev` script
 
 To run the `script.ts` file, run the following command:
 

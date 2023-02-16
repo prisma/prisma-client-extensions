@@ -27,7 +27,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/static-methods
+cd static-methods
 npm install
 ```
 

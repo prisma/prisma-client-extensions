@@ -33,7 +33,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Create a `.env` file and install dependencies:
 
 ```sh
-cd examples/json-field-types
+cd json-field-types
 cp .env.example .env
 npm install
 ```

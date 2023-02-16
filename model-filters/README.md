@@ -25,7 +25,7 @@ git clone git@github.com:sbking/prisma-client-extensions.git
 Install dependencies:
 
 ```sh
-cd examples/model-filters
+cd model-filters
 npm install
 ```
 
