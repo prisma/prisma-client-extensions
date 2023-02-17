@@ -1,0 +1,17 @@
+{
+  "extends": ["config:base", "docker:disable"],
+  "automerge": true,
+  "major": {
+    "automerge": false
+  },
+  "masterIssue": true,
+  "baseBranches": ["main"],
+  "packageRules": [
+    {
+      "baseBranchList": ["latest"],
+      "packageNames": ["prisma", "@prisma/client"],
+      "enabled": true,
+      "updateTypes": ["major"]
+    }
+  ]
+}
