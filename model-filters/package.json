@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.9.0",
-    "cuid": "^2.1.8",
+    "cuid": "^3.0.0",
     "date-fns": "^2.29.3"
   },
   "devDependencies": {
