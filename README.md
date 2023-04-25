@@ -8,8 +8,8 @@ This repository contains a number of examples of [Prisma Client extensions](http
 
 ## Examples
 
-| Example                                                 | Description                                                                                 |
-| :------------------------------------------------------ | :------------------------------------------------------------------------------------------ |
+| Example                                        | Description                                                                                 |
+| :--------------------------------------------- | :------------------------------------------------------------------------------------------ |
 | [`audit-log-context`](audit-log-context)       | Provides the current user's ID as context to Postgres audit log triggers                    |
 | [`callback-free-itx`](callback-free-itx)       | Adds a method to start interactive transactions without callbacks                           |
 | [`computed-fields`](computed-fields)           | Adds virtual / computed fields to result objects                                            |
@@ -25,3 +25,4 @@ This repository contains a number of examples of [Prisma Client extensions](http
 | [`row-level-security`](row-level-security)     | Uses Postgres row-level security policies to isolate data a multi-tenant application        |
 | [`static-methods`](static-methods)             | Adds custom query methods to Prisma Client models                                           |
 | [`transformed-fields`](transformed-fields)     | Demonstrates how to use result extensions to transform query results and add i18n to an app |
+| [`exists-fn`](exists-fn)                       | Adds an `exists` function to all your models                                                |
