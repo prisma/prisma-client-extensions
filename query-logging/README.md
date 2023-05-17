@@ -6,9 +6,9 @@ This technique could be used to perform generic logging, emit events, track usag
 
 ## Caveats
 
-> **NOTE**: The [OpenTelemetry tracing](https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing) and [Metrics](https://www.prisma.io/docs/concepts/components/prisma-client/metrics) features (currently in developer preview) can provide detailed insights into performance and how Prisma interacts with the database. This example shows how to use Prisma Client extensions to perform actions before or after queries, and is not a fully-featured logging / tracing solution.
+> **NOTE**: The [OpenTelemetry tracing](https://www.prisma.io/docs/concepts/components/prisma-client/opentelemetry-tracing) and [Metrics](https://www.prisma.io/docs/concepts/components/prisma-client/metrics) features (currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview)) can provide detailed insights into performance and how Prisma interacts with the database. This example shows how to use Prisma Client extensions to perform actions before or after queries, and is not a fully-featured logging / tracing solution.
 
-Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
+Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `query` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) for more information.
 

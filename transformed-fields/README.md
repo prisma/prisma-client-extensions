@@ -6,7 +6,7 @@ This example shows a way to implement internationalization (i18n) at the data ac
 
 ## Caveats
 
-Prisma Client extensions are currently in developer preview. This extension is provided as an example only. It is not intended to be used in production environments.
+Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `result` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/result) for more information.
 
