@@ -4,7 +4,7 @@ This example creates a client that only allows read operations like `findMany` a
 
 ## Caveats
 
-Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). This extension is provided as an example only. It is not intended to be used in production environments.
+This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `query` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) for more information.
 
