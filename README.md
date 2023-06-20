@@ -26,3 +26,9 @@ This repository contains a number of examples of [Prisma Client extensions](http
 | [`static-methods`](static-methods)             | Adds custom query methods to Prisma Client models                                           |
 | [`transformed-fields`](transformed-fields)     | Demonstrates how to use result extensions to transform query results and add i18n to an app |
 | [`exists-fn`](exists-fn)                       | Adds an `exists` function to all your models                                                |
+
+## Authoring extensions
+
+If you're interested in building an extension you want to share as a package, we recommend using the following [starter repository](https://github.com/prisma/prisma-client-extension-starter).
+
+Refer to our [documentation](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/shared-extensions) to learn more about how to create and publish extensions.
