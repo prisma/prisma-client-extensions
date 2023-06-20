@@ -8,7 +8,7 @@ Computed fields must specify which other fields they depend on, and they may be 
 
 ## Caveats
 
-Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). This extension is provided as an example only. It is not intended to be used in production environments.
+This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `result` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/result) for more information.
 

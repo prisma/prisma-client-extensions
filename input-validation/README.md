@@ -8,7 +8,7 @@ This technique could be used to sanitize user input or otherwise deny mutations 
 
 > **NOTE**: Query extensions do not currently work for nested operations. In this example, validations are only run on the top level `data` object passed to methods such as `prisma.product.create()`. Validations implemented this way do not automatically run for [nested writes](https://www.prisma.io/docs/concepts/components/prisma-client/relation-queries#nested-writes).
 
-Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). This extension is provided as an example only. It is not intended to be used in production environments.
+This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `query` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/query) for more information.
 

@@ -4,7 +4,7 @@
 
 This repository contains a number of examples of [Prisma Client extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions).
 
-> **Note**: Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). The extensions in this repository are provided as examples only, and without warranty. They are not intended to be used in production environments.
+> The extensions in this repository are provided as examples only, and without warranty. They are not intended to be used in production environments.
 
 ## Examples
 

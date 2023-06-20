@@ -13,7 +13,7 @@ await tx.$commit(); // Or: await tx.$rollback();
 
 ## Caveats
 
-Prisma Client extensions are currently in [Preview](https://www.prisma.io/docs/about/prisma/releases#preview). This extension is provided as an example only. It is not intended to be used in production environments.
+This extension is provided as an example only. It is not intended to be used in production environments.
 
 Please read [the documentation on `client` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/client) for more information.
 
