@@ -1,5 +1,4 @@
-import * as runtime from "@prisma/client/runtime/index";
-import { PrismaClient, Prisma, UserPayload } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 import { Profile } from "./schemas";
 
 const prisma = new PrismaClient().$extends({
@@ -50,8 +49,7 @@ const prisma = new PrismaClient().$extends({
   },
 });
 
-type ExtArgs = UserPayload<typeof prisma["$extends"]["extArgs"]>;
-type User = runtime.Types.GetResult<ExtArgs, {}, "findUniqueOrThrow">;
+type User = Prisma.Result<typeof prisma.user, {}, "findFirstOrThrow">;
 
 async function main() {
   const users = await prisma.user.findMany({ take: 10 });
