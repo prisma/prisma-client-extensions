@@ -5,10 +5,10 @@ const prisma = new PrismaClient().$extends({
     $allModels: {
       async exists<T>(
         this: T,
-        where: Prisma.Args<T, 'findFirst'>['where']
+        args: { where: Prisma.Args<T, 'findFirst'>['where'] }
       ): Promise<boolean> {
         const context = Prisma.getExtensionContext(this)
-        const result = await (context as any).findFirst({ where })
+        const result = await (context as any).findFirst(args)
         return result !== null
       },
     },
@@ -17,16 +17,20 @@ const prisma = new PrismaClient().$extends({
 
 async function main() {
   const user = await prisma.user.exists({
-    name: 'Alice'
+    where: {
+      name: 'Alice'
+    }
   })
 
   console.log({ user })
 
   const post = await prisma.post.exists({
-    OR: [
-      { title: { contains: 'Prisma' } },
-      { content: { contains: 'Prisma' } }
-    ]
+    where: {
+      OR: [
+        { title: { contains: 'Prisma' } },
+        { content: { contains: 'Prisma' } }
+      ]
+    }
   })
 
   console.log({ post })
