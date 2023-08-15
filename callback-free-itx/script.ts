@@ -32,7 +32,7 @@ const prisma = new PrismaClient({ log: ["query"] }).$extends({
         typeof prisma.$transaction === "function"
       ) {
         const tx = prisma.$transaction((txClient) => {
-          setTxClient(txClient);
+          setTxClient(txClient as unknown as Prisma.TransactionClient);
 
           return txPromise.catch((e) => {
             if (e === ROLLBACK) return;
