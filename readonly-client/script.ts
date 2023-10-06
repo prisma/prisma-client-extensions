@@ -10,6 +10,12 @@ const WRITE_METHODS = [
   "deleteMany",
 ] as const;
 
+const GLOBAL_WRITE_METHODS = [
+    '$executeRaw',
+    '$queryRawUnsafe',
+    '$executeRawUnsafe',
+] as const;
+
 const ReadonlyClient = Prisma.defineExtension({
   name: "ReadonlyClient",
   model: {
@@ -28,6 +34,15 @@ const ReadonlyClient = Prisma.defineExtension({
       ) => never;
     },
   },
+  query: Object.fromEntries(
+    GLOBAL_WRITE_METHODS.map((method) => [
+        method,
+        function (args: any) {
+          throw new Error(`Calling the \`${method}\` method on a readonly client is not allowed`);
+        }
+    ])) as {
+        [K in typeof GLOBAL_WRITE_METHODS[number]]: (args: any) => never;
+    }
 });
 
 const prisma = new PrismaClient();
@@ -44,6 +59,8 @@ async function main() {
   await readonlyPrisma.post.create({
     data: { title: "New post", published: false },
   });
+
+  await readonlyPrisma.$executeRaw`INSERT INTO post(id,title, published) VALUES(12345,'New post', false)`
 }
 
 main()
