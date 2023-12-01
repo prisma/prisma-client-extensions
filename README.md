@@ -26,6 +26,7 @@ This repository contains a number of examples of [Prisma Client extensions](http
 | [`static-methods`](static-methods)             | Adds custom query methods to Prisma Client models                                           |
 | [`transformed-fields`](transformed-fields)     | Demonstrates how to use result extensions to transform query results and add i18n to an app |
 | [`exists-fn`](exists-fn)                       | Adds an `exists` function to all your models                                                |
+| [`update-delete-ignore-not-found`](./update-delete-ignore-not-found/)                       | Adds `updateIgnoreNotFound` and `deleteIgnoreNotFound` function to all your models                                                 |
 
 ## Authoring extensions
 
