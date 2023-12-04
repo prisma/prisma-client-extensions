@@ -4,7 +4,7 @@ const prisma = new PrismaClient().$extends({
   name: "UpdateAndDeleteIgnoreNotFound",
   model: {
     $allModels: {
-      async updateIgnoreNotFound<T, A>(
+      async updateIgnoreOnNotFound<T, A>(
         this: T,
         args: Prisma.Exact<A, Prisma.Args<T, "update">>
       ): Promise<Prisma.Result<T, A, "update"> | null> {
@@ -21,7 +21,7 @@ const prisma = new PrismaClient().$extends({
           throw err;
         }
       },
-      async deleteIgnoreNotFound<T, A>(
+      async deleteIgnoreOnNotFound<T, A>(
         this: T,
         args: Prisma.Exact<A, Prisma.Args<T, "delete">>
       ): Promise<Prisma.Result<T, A, "delete"> | null> {
