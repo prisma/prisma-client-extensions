@@ -43,7 +43,7 @@ const prisma = new PrismaClient().$extends({
 });
 
 async function main() {
-  const updateOp = await prisma.user.updateIgnoreNotFound({
+  const updateOp = await prisma.user.updateIgnoreOnNotFound({
     where : {
       id: "-1"
     },
@@ -52,7 +52,7 @@ async function main() {
     }
   });
 
-  const deleteOp = await prisma.user.deleteIgnoreNotFound({
+  const deleteOp = await prisma.user.deleteIgnoreOnNotFound({
     where : {
       id: "-1"
     },

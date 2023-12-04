@@ -1,6 +1,6 @@
 # Prisma Client Extension - Update and Delete ignore on not found
 
-This example adds the `updateIgnoreNotFound` and `deleteIgnoreNotFound` methods to all your models. The two methods allow you to return `null` if a record is not found when updating or deleting a record instead of throwing an error.
+This example adds the `updateIgnoreOnNotFound` and `deleteIgnoreOnNotFound` methods to all your models. The two methods allow you to return `null` if a record is not found when updating or deleting a record instead of throwing an error.
 
 Please read [the documentation on `model` extensions](https://www.prisma.io/docs/concepts/components/prisma-client/client-extensions/model) for more information.
 
