@@ -33,7 +33,7 @@ Run the following command to create a SQLite database and seed your database wit
 npx prisma migrate dev
 ```
 
-### 4. Run the `dev` script
+### 3. Run the `dev` script
 
 To run the `script.ts` file, run the following command:
 
