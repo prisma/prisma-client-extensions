@@ -27,18 +27,10 @@ npm install
 
 ### 2. Create an SQLite database and run migrations
 
-Run the following command. An SQLite database will be created automatically:
+Run the following command to create a SQLite database and seed your database with sample data:
 
 ```sh
-npx prisma migrate deploy
-```
-
-### 3. Seed the database
-
-Run the following command to add seed data to the database:
-
-```sh
-npx prisma db seed
+npx prisma migrate dev
 ```
 
 ### 4. Run the `dev` script
