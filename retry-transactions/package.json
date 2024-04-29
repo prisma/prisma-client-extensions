@@ -9,7 +9,7 @@
     "exponential-backoff": "3.1.1"
   },
   "devDependencies": {
-    "@faker-js/faker": "7.6.0",
+    "@faker-js/faker": "8.4.1",
     "@types/node": "18.17.5",
     "prisma": "5.13.0",
     "ts-node": "10.9.1",
