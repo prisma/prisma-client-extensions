@@ -11,7 +11,7 @@
     "@types/node": "18.17.5",
     "prisma": "5.8.0",
     "ts-node": "10.9.1",
-    "typescript": "5.1.6"
+    "typescript": "5.4.5"
   },
   "prisma": {
     "seed": "ts-node --transpile-only prisma/seed.ts"
