@@ -33,11 +33,10 @@ const prisma = new PrismaClient({ log: ["query"] }).$extends({
       ) {
         const tx = prisma.$transaction((txClient) => {
           setTxClient(txClient as unknown as Prisma.TransactionClient);
-
-          return txPromise.catch((e) => {
-            if (e === ROLLBACK) return;
-            throw e;
-          });
+          return txPromise;
+        }).catch((e) => {
+          if (e === ROLLBACK) return;
+          throw e;
         });
 
         // return a proxy TransactionClient with `$commit` and `$rollback` methods
@@ -53,6 +52,11 @@ const prisma = new PrismaClient({ log: ["query"] }).$extends({
               return () => {
                 rollback();
                 return tx;
+              };
+            }
+            if (prop === "$transaction") {
+              return async (fn: (client: Prisma.TransactionClient) => Promise<any>) => {
+                return fn(target);
               };
             }
             return target[prop as keyof typeof target];
