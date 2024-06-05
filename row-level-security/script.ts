@@ -81,6 +81,10 @@ async function main() {
   const projects = await companyPrisma.project.findMany({ take: 3 });
   console.log({projects})
 
+  console.log("### plainProjects2")
+  const plainProjects2 = await prisma.project.findMany({ take: 3 });
+  console.log({ plainProjects2})
+
   console.log("### user2")
   const user2 = await bypassClient.user.findFirstOrThrow();
   console.log({user2})

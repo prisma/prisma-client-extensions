@@ -70,24 +70,16 @@ Params: []
     }
   ]
 }
-### user2
-Query: BEGIN
-Params: []
-Query: SELECT set_config('app.bypass_rls', 'on', TRUE)
-Params: []
-Query: SELECT "public"."User"."id", "public"."User"."companyId", "public"."User"."email" FROM "public"."User" WHERE 1=1 LIMIT $1 OFFSET $2
-Params: [1,0]
-Query: ROLLBACK
-Params: []
-prisma:error Error in batch request 1: Error occurred during query execution:
-ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "22P02", message: "invalid input syntax for type uuid: \"\"", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })
+### plainProjects2
+Query: SELECT "public"."Project"."id", "public"."Project"."companyId", "public"."Project"."userId", "public"."Project"."title" FROM "public"."Project" WHERE 1=1 ORDER BY "public"."Project"."id" ASC LIMIT $1 OFFSET $2
+Params: [3,0]
 prisma:error 
-Invalid `bypassClient.user.findFirstOrThrow()` invocation in
-/workspace/prisma-client-extensions/row-level-security/script.ts:85:41
+Invalid `prisma.project.findMany()` invocation in
+/workspace/prisma-client-extensions/row-level-security/script.ts:85:47
 
   82 console.log({projects})
   83 
-  84 console.log("### user2")
-→ 85 const user2 = await bypassClient.user.findFirstOrThrow(
-Error in batch request 1: Error occurred during query execution:
+  84 console.log("### plainProjects2")
+→ 85 const plainProjects2 = await prisma.project.findMany(
+Error occurred during query execution:
 ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "22P02", message: "invalid input syntax for type uuid: \"\"", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })
