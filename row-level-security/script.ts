@@ -35,56 +35,55 @@ function forCompany(companyId: string) {
     })
   );
 }
+const prisma = new PrismaClient({
+  log: [
+    {
+      emit: 'event',
+      level: 'query',
+    },
+    {
+      emit: 'stdout',
+      level: 'error',
+    },
+    {
+      emit: 'stdout',
+      level: 'info',
+    },
+    {
+      emit: 'stdout',
+      level: 'warn',
+    },
+  ],
+})
 
-const prisma = new PrismaClient();
+prisma.$on('query', (e) => {
+  console.log('Query: ' + e.query)
+  console.log('Params: ' + e.params)
+  // console.log('Duration: ' + e.duration + 'ms')
+})
 
 async function main() {
-  const user = await prisma.$extends(bypassRLS()).user.findFirstOrThrow();
+  const bypassClient = prisma.$extends(bypassRLS())
 
-  const companyPrisma = prisma.$extends(forCompany(user.companyId));
+  console.log("### plainProjects")
+  const plainProjects = await prisma.project.findMany({ take: 3 });
+  console.log({ plainProjects})
 
-  const projectInclude = {
-    owner: true,
-    tasks: {
-      include: {
-        assignee: true,
-      },
-    },
-  } satisfies Prisma.ProjectInclude;
+  console.log("### users1_a")
+  const user1_a = await bypassClient.user.findFirstOrThrow();
+  console.log({user1_a})
+  console.log("### users1_b")
+  const user1_b = await bypassClient.user.findFirstOrThrow();
+  console.log({user1_b})
 
-  const projects = await companyPrisma.project.findMany({
-    include: projectInclude,
-  });
+  console.log("### projects")
+  const companyPrisma = prisma.$extends(forCompany(user1_a.companyId));
+  const projects = await companyPrisma.project.findMany({ take: 3 });
+  console.log({projects})
 
-  invariant(projects.every((project) => project.companyId === user.companyId));
-
-  const newProject = await companyPrisma.project.create({
-    include: projectInclude,
-    data: {
-      title: "New project",
-      owner: {
-        connect: { id: user.id },
-      },
-      tasks: {
-        createMany: {
-          data: [
-            { title: "Task A", status: TaskStatus.Pending, userId: user.id },
-            { title: "Task B", status: TaskStatus.Pending, userId: user.id },
-            { title: "Task C", status: TaskStatus.Pending, userId: user.id },
-          ],
-        },
-      },
-    },
-  });
-
-  invariant(newProject.companyId === user.companyId);
-  invariant(
-    newProject.tasks.every((task) => task.companyId === user.companyId)
-  );
-}
-
-function invariant<T>(condition: T): asserts condition {
-  if (!condition) throw new Error("Invariant failed");
+  console.log("### user2")
+  const user2 = await bypassClient.user.findFirstOrThrow();
+  console.log({user2})
 }
 
 main()

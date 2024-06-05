@@ -1,0 +1,93 @@
+
+> dev
+> dotenv ts-node script.ts
+
+### plainProjects
+prisma:info Starting a postgresql pool with 17 connections.
+Query: SELECT "public"."Project"."id", "public"."Project"."companyId", "public"."Project"."userId", "public"."Project"."title" FROM "public"."Project" WHERE 1=1 ORDER BY "public"."Project"."id" ASC LIMIT $1 OFFSET $2
+Params: [3,0]
+{ plainProjects: [] }
+### users1_a
+Query: BEGIN
+Params: []
+Query: SELECT set_config('app.bypass_rls', 'on', TRUE)
+Params: []
+Query: SELECT "public"."User"."id", "public"."User"."companyId", "public"."User"."email" FROM "public"."User" WHERE 1=1 LIMIT $1 OFFSET $2
+Params: [1,0]
+Query: COMMIT
+Params: []
+{
+  user1_a: {
+    id: 'c5fccf2e-086a-498b-8f53-a1eee092e6df',
+    companyId: '498a46fa-608e-42ab-a454-c071c171d37a',
+    email: 'Earnest.Abernathy@gmail.com'
+  }
+}
+### users1_b
+Query: BEGIN
+Params: []
+Query: SELECT set_config('app.bypass_rls', 'on', TRUE)
+Params: []
+Query: SELECT "public"."User"."id", "public"."User"."companyId", "public"."User"."email" FROM "public"."User" WHERE 1=1 LIMIT $1 OFFSET $2
+Params: [1,0]
+Query: COMMIT
+Params: []
+{
+  user1_b: {
+    id: 'c5fccf2e-086a-498b-8f53-a1eee092e6df',
+    companyId: '498a46fa-608e-42ab-a454-c071c171d37a',
+    email: 'Earnest.Abernathy@gmail.com'
+  }
+}
+### projects
+Query: BEGIN
+Params: []
+Query: SELECT set_config('app.current_company_id', $1, TRUE)
+Params: ["498a46fa-608e-42ab-a454-c071c171d37a"]
+Query: SELECT "public"."Project"."id", "public"."Project"."companyId", "public"."Project"."userId", "public"."Project"."title" FROM "public"."Project" WHERE 1=1 ORDER BY "public"."Project"."id" ASC LIMIT $1 OFFSET $2
+Params: [3,0]
+Query: COMMIT
+Params: []
+{
+  projects: [
+    {
+      id: '0018b09c-c37b-453f-a511-fd4d4e59777e',
+      companyId: '498a46fa-608e-42ab-a454-c071c171d37a',
+      userId: '2210640d-8980-481d-a8c2-4c5ab1b00c50',
+      title: 'Sleek Plastic Towels'
+    },
+    {
+      id: '1b02cbfc-b030-4c08-b5e4-6e2d6e00267e',
+      companyId: '498a46fa-608e-42ab-a454-c071c171d37a',
+      userId: 'f900f2c3-2574-4abd-8566-56b92d0a726e',
+      title: 'Modern Granite Fish'
+    },
+    {
+      id: '211b6817-f527-48ee-8dfc-5d92f5511200',
+      companyId: '498a46fa-608e-42ab-a454-c071c171d37a',
+      userId: '3c899a22-d645-4027-8079-c04c0945c43a',
+      title: 'Generic Rubber Soap'
+    }
+  ]
+}
+### user2
+Query: BEGIN
+Params: []
+Query: SELECT set_config('app.bypass_rls', 'on', TRUE)
+Params: []
+Query: SELECT "public"."User"."id", "public"."User"."companyId", "public"."User"."email" FROM "public"."User" WHERE 1=1 LIMIT $1 OFFSET $2
+Params: [1,0]
+Query: ROLLBACK
+Params: []
+prisma:error Error in batch request 1: Error occurred during query execution:
+ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "22P02", message: "invalid input syntax for type uuid: \"\"", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })
+prisma:error 
+Invalid `bypassClient.user.findFirstOrThrow()` invocation in
+/workspace/prisma-client-extensions/row-level-security/script.ts:85:41
+
+  82 console.log({projects})
+  83 
+  84 console.log("### user2")
+→ 85 const user2 = await bypassClient.user.findFirstOrThrow(
+Error in batch request 1: Error occurred during query execution:
+ConnectorError(ConnectorError { user_facing_error: None, kind: QueryError(PostgresError { code: "22P02", message: "invalid input syntax for type uuid: \"\"", severity: "ERROR", detail: None, column: None, hint: None }), transient: false })
