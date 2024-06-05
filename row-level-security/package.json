@@ -2,10 +2,11 @@
   "name": "row-level-security",
   "private": true,
   "scripts": {
-    "dev": "ts-node script.ts"
+    "dev": "dotenv ts-node script.ts"
   },
   "dependencies": {
-    "@prisma/client": "5.13.0"
+    "@prisma/client": "5.13.0",
+    "dotenv-cli": "^7.4.2"
   },
   "devDependencies": {
     "@faker-js/faker": "8.4.1",
