@@ -6,6 +6,7 @@ const WRITE_METHODS = [
   "upsert",
   "delete",
   "createMany",
+  "createManyAndReturn",
   "updateMany",
   "deleteMany",
 ] as const;
