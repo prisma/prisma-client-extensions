@@ -37,11 +37,11 @@ const ReadonlyClient = Prisma.defineExtension({
   query: Object.fromEntries(
     GLOBAL_WRITE_METHODS.map((method) => [
         method,
-        function (args: any) {
+        function (args: never) {
           throw new Error(`Calling the \`${method}\` method on a readonly client is not allowed`);
         }
     ])) as {
-        [K in typeof GLOBAL_WRITE_METHODS[number]]: (args: any) => never;
+        [K in typeof GLOBAL_WRITE_METHODS[number]]: (args: `Calling the \`${K}\` method on a readonly client is not allowed`) => never;
     }
 });
 
