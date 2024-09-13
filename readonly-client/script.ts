@@ -14,6 +14,7 @@ const GLOBAL_WRITE_METHODS = [
     '$executeRaw',
     '$queryRawUnsafe',
     '$executeRawUnsafe',
+    '$runCommandRaw',
 ] as const;
 
 const ReadonlyClient = Prisma.defineExtension({
