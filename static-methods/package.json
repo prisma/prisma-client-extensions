@@ -9,7 +9,7 @@
     "bcryptjs": "2.4.3"
   },
   "devDependencies": {
-    "@faker-js/faker": "8.4.1",
+    "@faker-js/faker": "9.0.2",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "20.16.5",
     "prisma": "5.19.1",
