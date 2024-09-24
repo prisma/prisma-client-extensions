@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@prisma/client": "5.19.1",
-    "date-fns": "3.6.0"
+    "date-fns": "4.1.0"
   },
   "devDependencies": {
     "@faker-js/faker": "8.4.1",
