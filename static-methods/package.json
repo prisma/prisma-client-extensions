@@ -6,7 +6,7 @@
   },
   "dependencies": {
     "@prisma/client": "6.0.1",
-    "bcryptjs": "2.4.3"
+    "bcryptjs": "3.0.2"
   },
   "devDependencies": {
     "@faker-js/faker": "9.0.2",
