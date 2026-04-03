@@ -9,7 +9,7 @@
   },
   "devDependencies": {
     "@faker-js/faker": "9.9.0",
-    "@types/node": "22.19.15",
+    "@types/node": "22.19.17",
     "prisma": "6.19.3",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
