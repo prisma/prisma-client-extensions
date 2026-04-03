@@ -6,11 +6,11 @@
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
-    "bcryptjs": "3.0.2"
+    "bcryptjs": "3.0.3"
   },
   "devDependencies": {
     "@faker-js/faker": "9.9.0",
-    "@types/bcryptjs": "2.4.6",
+    "@types/bcryptjs": "3.0.0",
     "@types/node": "22.19.17",
     "prisma": "6.19.3",
     "ts-node": "10.9.2",
