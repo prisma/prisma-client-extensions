@@ -1,4 +1,5 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaPromise } from '@prisma/client/runtime/library'
 
 type FlatTransactionClient = Prisma.TransactionClient & {
   $commit: () => Promise<void>;
@@ -17,7 +18,7 @@ const prisma = new PrismaClient({ log: ["query"] }).$extends({
 
       // a promise for getting the tx inner client
       const txClient = new Promise<Prisma.TransactionClient>((res) => {
-        setTxClient = (txClient) => res(txClient);
+        setTxClient = res;
       });
 
       // a promise for controlling the transaction
@@ -33,12 +34,13 @@ const prisma = new PrismaClient({ log: ["query"] }).$extends({
       ) {
         const tx = prisma.$transaction((txClient) => {
           setTxClient(txClient as unknown as Prisma.TransactionClient);
-
-          return txPromise.catch((e) => {
-            if (e === ROLLBACK) return;
-            throw e;
-          });
-        });
+          return txPromise;
+        }).catch((e) => {
+          if (e === ROLLBACK) {
+            return;
+          }
+          throw e;
+        })
 
         // return a proxy TransactionClient with `$commit` and `$rollback` methods
         return new Proxy(await txClient, {
@@ -69,17 +71,18 @@ async function main() {
   const tx = await prisma.$begin();
   const user = await tx.user.findFirstOrThrow();
 
-  const tx2 = await prisma.$begin();
-  await tx2.user.findMany();
+  // const tx2 = await prisma.$begin();
+  // await tx2.user.findMany();
 
   await tx.user.update({
     where: { id: user.id },
-    data: { firstName: `${user.firstName} II` },
+    data: { firstName: `${user.firstName} Update 2` },
   });
-  await tx.$commit();
+  await tx.$rollback();
+  const tx2 = await prisma.$begin();
 
-  await tx2.user.count();
-  await tx2.$commit();
+  console.dir(await tx2.user.findFirstOrThrow({ where: { id: user.id } }));
+
 }
 
 main()
