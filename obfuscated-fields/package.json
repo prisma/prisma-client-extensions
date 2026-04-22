@@ -5,14 +5,14 @@
     "dev": "ts-node script.ts"
   },
   "dependencies": {
-    "@prisma/client": "6.19.3",
+    "@prisma/client": "7.8.0",
     "bcryptjs": "3.0.2"
   },
   "devDependencies": {
     "@faker-js/faker": "9.9.0",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "22.19.17",
-    "prisma": "6.19.3",
+    "prisma": "7.8.0",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
   },
