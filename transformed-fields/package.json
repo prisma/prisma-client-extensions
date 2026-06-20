@@ -9,7 +9,7 @@
     "date-fns": "4.4.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "9.9.0",
+    "@faker-js/faker": "10.5.0",
     "@types/node": "22.20.0",
     "prisma": "6.19.3",
     "ts-node": "10.9.2",
