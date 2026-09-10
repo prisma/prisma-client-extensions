@@ -12,7 +12,7 @@
     "@faker-js/faker": "9.9.0",
     "@types/bcryptjs": "2.4.6",
     "@types/node": "22.20.2",
-    "prisma": "6.19.3",
+    "prisma": "7.10.0",
     "ts-node": "10.9.2",
     "typescript": "5.9.3"
   }
